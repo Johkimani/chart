@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "server1": "node server1/server.js",
+  "dev1": "nodemon server1/server.js"
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Johkimani/chart.git"
