@@ -1,25 +1,53 @@
+console.log("CHAT JS LOADED");
 const socket = io();
+
+const usernameInput = document.getElementById("username");
+const joinBtn = document.getElementById("joinBtn");
 
 const messageInput = document.getElementById("messageInput");
 const sendButton = document.getElementById("sendButton");
+
 const messages = document.getElementById("messages");
+
+let username = "";
+
+joinBtn.addEventListener("click", () => {
+
+    username = usernameInput.value.trim();
+
+    if (!username) {
+        alert("Enter username");
+        return;
+    }
+
+    joinBtn.disabled = true;
+    usernameInput.disabled = true;
+});
 
 sendButton.addEventListener("click", () => {
 
-    const message = messageInput.value;
+    if (!username) {
+        alert("Join the chat first");
+        return;
+    }
 
-    if (!message.trim()) return;
+    const text = messageInput.value.trim();
 
-    socket.emit("chat-message", message);
+    if (!text) return;
+
+    socket.emit("chat-message", {
+        username,
+        text
+    });
 
     messageInput.value = "";
 });
 
-socket.on("chat-message", (message) => {
+socket.on("chat-message", (data) => {
 
     const p = document.createElement("p");
 
-    p.textContent = message;
+    p.textContent = `${data.username}: ${data.text}`;
 
     messages.appendChild(p);
 });

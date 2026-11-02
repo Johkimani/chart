@@ -8,6 +8,18 @@
 
     <h1>Distributed Chat App</h1>
 
+    <input
+        type="text"
+        id="username"
+        placeholder="Enter username"
+    />
+
+    <button id="joinBtn">
+        Join Chat
+    </button>
+
+    <hr>
+
     <div id="messages"></div>
 
     <input
@@ -20,6 +32,7 @@
         Send
     </button>
 
+    <!-- REQUIRED -->
     <script src="/socket.io/socket.io.js"></script>
     <script src="chat.js"></script>
 
