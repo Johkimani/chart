@@ -1,40 +1,81 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Distributed Chat App</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group 12 Distributed Chat Application</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="chat-app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <div class="app-logo">🌐</div>
+                <div>
+                    <h1>Group 12 Distributed Chat Application</h1>
+                    <p class="subtitle">Multi-Node Real-Time Messaging with Automated Failover</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="status-card">
+                    <span class="status-indicator" id="statusDot"></span>
+                    <span id="serverStatusText">Connecting...</span>
+                </div>
+                <div class="peer-status-pill" id="peerStatusPill" title="Peer Server Synchronization Status">
+                    <span class="peer-dot" id="peerDot"></span>
+                    <span id="peerStatusText">Peer: Checking...</span>
+                </div>
+                <button id="manualFailoverBtn" class="failover-btn" title="Simulate server crash or manually switch node">
+                    ⚡ Switch Node
+                </button>
+            </div>
+        </header>
 
-    <h1>Distributed Chat App</h1>
+        <!-- Node & Session Banner -->
+        <div class="node-info-bar">
+            <div class="node-badge" id="activeNodeBadge">Active Node: Server 1 (Port 3000)</div>
+            <div class="failover-notice" id="failoverNotice" style="display: none;">
+                ⚠️ Failover Active: Running on Backup Node
+            </div>
+            <div class="user-badge" id="userBadge" style="display: none;">
+                Logged in as: <strong id="currentUsernameDisplay"></strong>
+            </div>
+        </div>
 
-    <input
-        type="text"
-        id="username"
-        placeholder="Enter username"
-    />
+        <!-- Join Form Section -->
+        <section id="joinSection" class="join-section">
+            <div class="join-card">
+                <h2>Join the Distributed Chat</h2>
+                <p>Connect to the distributed server cluster. Messages are synchronized across all server nodes.</p>
+                <div class="join-form">
+                    <input type="text" id="usernameInput" placeholder="Enter your display name..." maxlength="25" autofocus>
+                    <button id="joinBtn" class="primary-btn">Join Chat Room</button>
+                </div>
+            </div>
+        </section>
 
-    <button id="joinBtn">
-        Join Chat
-    </button>
+        <!-- Main Chat Section -->
+        <section id="chatSection" class="chat-section" style="display: none;">
+            <div class="messages-container" id="messagesContainer">
+                <div class="chat-welcome-banner">
+                    <span>💬 Welcome! Messages are replicated across distributed server nodes in real time.</span>
+                </div>
+                <div id="messagesList" class="messages-list"></div>
+            </div>
 
-    <hr>
+            <!-- Message Input Area -->
+            <form id="messageForm" class="message-input-bar">
+                <input type="text" id="messageInput" placeholder="Type your message here..." autocomplete="off">
+                <button type="submit" id="sendBtn" class="send-btn">
+                    <span>Send</span> ✈️
+                </button>
+            </form>
+        </section>
+    </div>
 
-    <div id="messages"></div>
-
-    <input
-        type="text"
-        id="messageInput"
-        placeholder="Type message..."
-    />
-
-    <button id="sendButton">
-        Send
-    </button>
-
-    <!-- REQUIRED -->
+    <!-- Socket.IO Client Library -->
     <script src="/socket.io/socket.io.js"></script>
     <script src="chat.js"></script>
-
 </body>
 </html>

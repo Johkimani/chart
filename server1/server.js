@@ -1,32 +1,7 @@
-const express = require("express");
-const http = require("http");
-const { Server } = require("socket.io");
+const { startServer } = require("../server-core");
 
-const app = express();
-const server = http.createServer(app);
-
-const io = new Server(server);
-
-app.use(express.static("public"));
-
-io.on("connection", (socket) => {
-    console.log(`Client connected: ${socket.id}`);
-
-    socket.on("chat-message", (data) => {
-
-    console.log(`${data.username}: ${data.text}`);
-
-    io.emit("chat-message", data);
-
-});
-
-    socket.on("disconnect", () => {
-        console.log(`Client disconnected: ${socket.id}`);
-    });
-});
-
-const PORT = 3000;
-
-server.listen(PORT, () => {
-    console.log(`Server 1 running on port ${PORT}`);
+startServer({
+    port: 3000,
+    peerPort: 3001,
+    serverName: "Server 1"
 });
